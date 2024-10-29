@@ -30,6 +30,8 @@
     <script type="module" src="./data.js"></script>
   </head>
   <body>
+    
+<!-- P: Header with logo, Book Connect Text, search and theme buttons-->
 
     <header class="header">
       <div class="header__inner">
@@ -89,6 +91,8 @@
         </div>
       </div>
     </header>
+<!-- P: List of books, click on search and find a book not listed- list_message will show,
+  also include "Show More" button at the bottom-->
 
     <main class="list">
       <div class="list__items" data-list-items></div>
@@ -96,6 +100,7 @@
       <button class="list__button" data-list-button></button>
     </main>
 
+<!-- P: Click on a book - modal will show with book info and "close" button-->
 
     <dialog class="overlay" data-list-active>
       <div class="overlay__preview"><img class="overlay__blur" data-list-blur src=""/><img class="overlay__image" data-list-image src=""/></div>
@@ -110,6 +115,7 @@
       </div>
     </dialog>
 
+<!-- P: Click on seach button to find a book with "cancel" and "search" buttons-->
 
     <dialog class="overlay" data-search-overlay>
       <div class="overlay__content">
@@ -137,6 +143,8 @@
         </div>
       </div>
     </dialog>
+
+<!-- P: Theme button to switch to day or night mode with "cancel" and "save" buttons-->
 
     <dialog class="overlay" data-settings-overlay>
       <div class="overlay__content">
