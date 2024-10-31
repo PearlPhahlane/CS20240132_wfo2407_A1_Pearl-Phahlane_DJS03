@@ -9,8 +9,8 @@ const bookData = {
 }
 
 //Functions
-
-const bookPreview = {create: (book) => {
+//This function is to be able to Preview the book
+const bookPreview = {create: function(book) {
   const element = document.createElement("button");
   element.classList = "preview";
   element.setAttribute("data-preview", id);
@@ -29,7 +29,17 @@ const bookPreview = {create: (book) => {
   return element;
 
 },
-
+// add these new elements to the end of the HTML element's child list 
+append: function(starting, newItems, fragment, books) {
+  for(const book of books.slice(0, BOOKS_PER_PAGE)) {
+    starting.appendChild(bookPreview.create(book));
+    newItems.appendChild(bookPreview.create(book));
+    fragment.appendChild(bookPreview.create(book));
+  }
+  //this is where the new added eements will be located in the DOM
+  document.querySelector("[data-list-items]").appendChild(newItems);
+  document.querySelector("[data-list-items]").appendChild(fragment)
+}
 }
 
 let page = 1;
