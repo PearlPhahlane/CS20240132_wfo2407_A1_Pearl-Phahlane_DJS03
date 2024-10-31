@@ -81,17 +81,24 @@ const bookSearch = { filter: function(books, filters) {
   const uniqueKey = `${book.title.toLowerCase()} - ${book.author.toLowerCase()}`;
 
   //check for title and author condtions
-  if (
-       (filters.title.trim() === "" ||
-         book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
-       (filters.author === "any" || book.author === filters.author) &&
-       genreMatch &&
-       !seen.has(uniqueKey) // Ensure this book hasn't been added yet
-     )
-     {
-       seen.add(uniqueKey); // Mark this book as seen
-       result.push(book); // Add to results if it's not a duplicate
-     }
+    if (
+        (filters.title.trim() === "" ||
+          book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
+        (filters.author === "any" || book.author === filters.author) &&
+        genreMatch &&
+        !seen.has(uniqueKey) // Ensure this book hasn't been added yet
+      )
+      {
+        seen.add(uniqueKey); // Mark this book as seen
+        result.push(book); // Add to results if it's not a duplicate
+      }
+  }
+
+  return result;
+
+}
+
+
 
 let page = 1;
 let matches = books
