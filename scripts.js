@@ -61,6 +61,38 @@ const bookPreview = {create: function(book) {
   },
 };
 
+const bookSearch = { filter: function(books, filters) {
+  const result = [];
+  const seen = new Set (); //trackinng unique books by title and author combination
+
+  for(const book of books) {
+    let genreMatch = filters.genre === "any"; //allow any genre
+
+    //check if book's genre include selected genre 
+    for (const singleGenre of book.genres) {
+      if(singleGenre === filters.genre) {
+        genreMatch = true; //fiund a matching genre
+        break; //no need to check further genres
+      }
+    }
+  }
+
+  //create unique key based on title and author
+  const uniqueKey = `${book.title.toLowerCase()} - ${book.author.toLowerCase()}`;
+
+  //check for title and author condtions
+  if (
+       (filters.title.trim() === "" ||
+         book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
+       (filters.author === "any" || book.author === filters.author) &&
+       genreMatch &&
+       !seen.has(uniqueKey) // Ensure this book hasn't been added yet
+     )
+     {
+       seen.add(uniqueKey); // Mark this book as seen
+       result.push(book); // Add to results if it's not a duplicate
+     }
+
 let page = 1;
 let matches = books
 
