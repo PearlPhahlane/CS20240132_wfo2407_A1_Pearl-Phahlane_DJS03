@@ -10,25 +10,20 @@ const bookData = {
 
 //Functions
 //This function is to be able to Preview the book
-const bookPreview = {create: function(book) {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
+const bookPreview = { create: function(book) {
+   const element = document.createElement("button");
+   element.classList = "preview";
+   element.setAttribute("data-preview", book.id);
+   element.innerHTML = `
+     <img class="preview__image" src="${book.image}" />
+     <div class="preview__info">
+       <h3 class="preview__title">${book.title}</h3>
+       <div class="preview__author">${bookData.authors[book.author]}</div>
+     </div>
+   `;
+   return element;
+ },
 
-  element.innerHTML = `
-        <img
-            class="preview__image"
-            src="${image}"
-        />
-        
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-    `;
-  return element;
-
-},
 // add these new elements to the end of the HTML element's child list
   append: function(starting, newItems, fragment, books) {
     for(const book of books.slice(0, BOOKS_PER_PAGE)) {
