@@ -61,42 +61,80 @@ const bookPreview = {create: function(book) {
   },
 };
 
-const bookSearch = { filter: function(books, filters) {
-  const result = [];
-  const seen = new Set (); //trackinng unique books by title and author combination
 
-  for(const book of books) {
-    let genreMatch = filters.genre === "any"; //allow any genre
+//bookSearh object with function to search for books and returning the results using filter method 
+const bookSearch = {
+  filter: function(books, filters) {
+    const result = [];
+    const seen = new Set(); // Track unique books by title and author combination
 
-    //check if book's genre include selected genre 
-    for (const singleGenre of book.genres) {
-      if(singleGenre === filters.genre) {
-        genreMatch = true; //fiund a matching genre
-        break; //no need to check further genres
+    for (const book of books) {
+      let genreMatch = filters.genre === "any"; // Allow any genre
+
+      // Check if the book's genres include the selected genre
+      for (const singleGenre of book.genres) {
+        if (singleGenre === filters.genre) {
+          genreMatch = true; // Found a matching genre
+          break; // No need to check further genres
+        }
       }
-    }
-  }
 
-  //create unique key based on title and author
-  const uniqueKey = `${book.title.toLowerCase()} - ${book.author.toLowerCase()}`;
+      // Create a unique key based on title and author
+      const uniqueKey = `${book.title.toLowerCase()}-${book.author.toLowerCase()}`;
 
-  //check for title and author condtions
-    if (
+      // Check for title and author conditions
+      if (
         (filters.title.trim() === "" ||
           book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
         (filters.author === "any" || book.author === filters.author) &&
         genreMatch &&
         !seen.has(uniqueKey) // Ensure this book hasn't been added yet
-      )
-      {
+      ) {
         seen.add(uniqueKey); // Mark this book as seen
         result.push(book); // Add to results if it's not a duplicate
       }
-  }
+    }
 
-  return result;
+    return result;
+  },
 
-}
+  updateUI: (matches, page) => {
+    const listItems = document.querySelector("[data-list-items]");
+    listItems.innerHTML = ""; // Clear previous results to avoid duplicates
+
+    const newItems = document.createDocumentFragment(); // Use a fragment for performance
+    for (const book of matches.slice(
+      (page - 1) * bookData.BOOKS_PER_PAGE,
+      page * bookData.BOOKS_PER_PAGE
+    )) {
+      const bookElement = bookPreview.create(book);
+      newItems.appendChild(bookElement); // Append each book to the fragment
+    }
+
+    listItems.appendChild(newItems); // Add all new items at once
+
+    // Check if there are results to display
+    if (matches.length < 1) {
+      document
+        .querySelector("[data-list-message]")
+        .classList.add("list__message_show");
+    } else {
+      document
+        .querySelector("[data-list-message]")
+        .classList.remove("list__message_show");
+    }
+
+    // Update show more button
+    document.querySelector("[data-list-button]").disabled =
+      matches.length - page * bookData.BOOKS_PER_PAGE < 1;
+    document.querySelector("[data-list-button]").innerHTML = `
+     Show more (${matches.length - page * bookData.BOOKS_PER_PAGE > 0 ? matches.length - page * bookData.BOOKS_PER_PAGE : 0})
+   `;
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  },
+};
+
 
 
 
