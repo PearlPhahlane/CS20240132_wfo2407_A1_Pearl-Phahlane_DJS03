@@ -148,6 +148,17 @@ bookPreview.append (
   matches
 );
 
+
+//Show more button will be disabled before search and will show remaining books 
+const listButton = document.querySelector("[data-list-button]");
+const remainingBooks = matches.length - page * bookData.BOOKS_PER_PAGE;
+listButton.disabled = remainingBooks > 0;
+listButton.innerText = `Show more (${remainingBooks > 0 ? remainingBooks : 0})`;
+
+// Initialize search dropdowns
+searchDropdown.create(bookData.genres, "All Genres", "[data-search-genres]");
+searchDropdown.create(bookData.authors, "All Authors", "[data-search-authors]");
+
 const starting = document.createDocumentFragment()
 
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
