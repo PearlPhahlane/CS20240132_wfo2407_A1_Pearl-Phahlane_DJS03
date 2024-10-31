@@ -135,11 +135,18 @@ const bookSearch = {
   },
 };
 
-
-
-
+//Initialize
 let page = 1;
-let matches = books
+let matches = bookData.books;
+
+//Initial book preview
+//call append method of bookPreview 
+bookPreview.append (
+  document.createDocumentFragment(),
+  document.createDocumentFragment(),
+  document.createDocumentFragment(),
+  matches
+);
 
 const starting = document.createDocumentFragment()
 
