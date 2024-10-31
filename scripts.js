@@ -29,7 +29,7 @@ const bookPreview = {create: function(book) {
   return element;
 
 },
-// add these new elements to the end of the HTML element's child list 
+// add these new elements to the end of the HTML element's child list
 append: function(starting, newItems, fragment, books) {
   for(const book of books.slice(0, BOOKS_PER_PAGE)) {
     starting.appendChild(bookPreview.create(book));
@@ -39,8 +39,26 @@ append: function(starting, newItems, fragment, books) {
   //this is where the new added eements will be located in the DOM
   document.querySelector("[data-list-items]").appendChild(newItems);
   document.querySelector("[data-list-items]").appendChild(fragment)
-}
-}
+},
+};
+//function within searchDropdown object with method create 
+const searchDropdown = { create: function(data, placeholder, elementSelector){
+  const genreAndAuthor = document.createDocumentFragment();
+  const firstOption = document.createElement("option");
+  firstOption.value = "any";
+  firstOption.innerText = placeholder;
+  genreAndAuthor.appendChild(firstOption);
+
+  for(const [id, name] of Object.entries(data)) {
+    const option = document.createElement("option");
+    option.value = id;
+    option.innerText = name;
+    genreAndAuthor.appendChild(option);
+  }
+  //where it will be added in HTML using CSS selector string elementSelector
+  document.querySelector(elementSelector).appendChild(genreAndAuthor);
+
+}}
 
 let page = 1;
 let matches = books
