@@ -185,12 +185,10 @@ document.querySelector('[data-list-close]').addEventListener('click', () => {
 document.querySelector("[data-settings-form]").addEventListener("submit", (event) => {
    event.preventDefault();
    const { theme } = Object.fromEntries(new FormData(event.target));
-   document.documentElement.style.setProperty(
-     "--color-dark", theme === "night" ? "255, 255, 255" : "10, 10, 20"
-   );
-   document.documentElement.style.setProperty(
-     "--color-light", theme === "night" ? "10, 10, 20" : "255, 255, 255"
-   );
+
+   document.documentElement.style.setProperty("--color-dark", theme === "night" ? "255, 255, 255" : "10, 10, 20");
+   document.documentElement.style.setProperty( "--color-light", theme === "night" ? "10, 10, 20" : "255, 255, 255");
+   
    document.querySelector("[data-settings-overlay]").open = false;
  });
 
