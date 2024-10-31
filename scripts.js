@@ -98,7 +98,7 @@ const bookSearch = {
     return result;
   },
 
-  updateUI: (matches, page) => {
+  updateUI: function(matches, page) {
     const listItems = document.querySelector("[data-list-items]");
     listItems.innerHTML = ""; // Clear previous results to avoid duplicates
 
